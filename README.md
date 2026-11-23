@@ -38,6 +38,28 @@ full-data Table 1 (`t1_fulldata.csv`), rule-threshold sensitivity
 (`t1b_rule_sens.csv`), PCA-in-fold robustness (`t1c_pca_infold.csv`),
 atlas histograms, dose tests, frame audit, independent-pipeline outputs.
 
+## Data setup (Zenodo corpus)
+
+Each of the 84 tar archives unpacks to `{group}/{date}/...` subdirectories.
+To assemble a usable image root:
+
+```bash
+mkdir -p data/images
+sha256sum -c SHA256SUMS.txt            # verify the download
+for t in *.tar; do tar -xf "$t" -C data/images; done
+export WORM_DATA_ROOT=/absolute/path/to/data/images
+```
+
+The expected directory layout under `WORM_DATA_ROOT` is
+`{group}/{date}/{row}/{worm}_{frame}.png`, e.g.
+`control/0116/B/worm30_161.png`, with `group` ∈ {control, 5mg, 8mg, 10mg},
+`date` a four-digit month-day (0116–0211), `row` ∈ {B, C, D, E} and
+`worm` ∈ worm1–worm24. The public WormSwin corpus is prepared by
+`code/prep_wormcrops_5dim.py` (see its docstring for the source layout).
+
+Every script resolves the image root through `code/wormpath.get_data_root()`;
+no script needs path edits.
+
 ## Requirements
 
 Python 3.10+; see `requirements.txt`.
@@ -71,6 +93,42 @@ Preregistered clustering criteria (silhouette / density-valley / stability
 cuts) are declared in the manuscript Methods and implemented verbatim in the
 clustering scripts; run parameters are in Supporting Information S7
 (`code/run_full_v17.sh` archives the exact command lines).
+
+### Minimal chain for the full-data Table 1
+
+Three commands reproduce the headline result (≈ 4 M frames; ~70 min for
+`cluster_atlas.py` on 12 cores, ~20 h for `step19_theta_full.py`, ~65 min
+for `t1_fulldata.py`):
+
+```bash
+# 1. skeleton + κ(s) cache for the whole corpus
+python code/cluster_atlas.py -i "$WORM_DATA_ROOT" -o atlas_out_all
+
+# 2. θ(s) re-extraction (sharded, resumable), then merge shards
+python code/step19_theta_full.py --cache atlas_out_all/kappa_cache.npz \
+    --out atlas_out_all/theta_full
+python code/step19_theta_full.py --assemble --out atlas_out_all/theta_full
+
+# 3. Table 1: linear + RBF SVM, worm-grouped GroupKFold(5)
+python code/t1_fulldata.py --cache atlas_out_all/kappa_cache.npz \
+    --theta atlas_out_all/theta_full/theta_full.npy \
+    --theta-valid atlas_out_all/theta_full/theta_valid.npy \
+    -o atlas_out_all/t1_fulldata
+```
+
+`t1b_rule_sensitivity.py` and `t1c_pca_infold.py` consume the same
+`kappa_cache.npz` / θ outputs; their defaults already point at the
+`atlas_out_all/` prefix shown above.
+
+### Annotation CSVs ↔ images
+
+Each row of `annotations/*/labels_*.csv` carries an `item_id` (batch code)
+plus a `rel_path` column giving the source frame's path relative to the
+respective corpus root — `control/0119/B/worm6_141.png` style for the main
+corpus (resolved under `WORM_DATA_ROOT`), `train/0000/<split>/worm008_001.png`
+style for the WormSwin crops (resolved under the directory produced by
+`prep_wormcrops_5dim.py`). `annotations/wormcrops/key.csv` additionally
+carries the rule labels used for the human–rule κ comparison.
 
 ## Key results (full corpus)
 

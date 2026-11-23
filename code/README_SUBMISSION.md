@@ -28,6 +28,9 @@ Key steps:
 | SBPD/fPCA + 4-feature SVM (Tables 2–3) | `step8_train_svm.py` | `table2*.csv`, `table3*.csv` |
 | Grouped cross-validation | `step9_group_cv.py` | `group_cv_results.csv` |
 | Human-annotation agreement | `step18_agreement_v2.py` | agreement stats |
+| Full-data Table 1 (4,055,924 frames) | `step19_theta_full.py` → `t1_fulldata.py` | `t1_fulldata.csv` |
+| Rule-threshold sensitivity | `t1b_rule_sensitivity.py` | `t1b_rule_sens.csv` |
+| PCA-in-fold robustness | `t1c_pca_infold.py` | `t1c_pca_infold.csv` |
 
 ## Cross-dataset validation (public worm image crops)
 
@@ -35,6 +38,7 @@ Key steps:
 python prep_wormcrops_5dim.py --src worm_crops --out wormcrops_5dim
 bash run_wormcrops_full.sh    # 6-step core chain, checkpointed (logs_wormcrops/*.done)
 python test_skeleton_worm_crops.py --n 300   # extraction benchmark (89.3% success)
+python wc_binary_kappa.py    # human-rule vs human-human binary κ (Table 7 / text)
 ```
 
 ## Notes
