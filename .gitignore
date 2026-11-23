@@ -1,0 +1,23 @@
+# caches and large intermediates (kept on Zenodo, not in Git)
+*.npz
+*.npy
+*.pkl
+*.tar
+*.log
+logs_*/
+logs_v17/
+logs_wormcrops/
+logs_theta/
+logs_t1/
+atlas_out_full/
+atlas_out_all/
+zenodo_staging/
+annotation_v2/
+annotation_v3/
+annotation_wc/images/
+wormcrops_5dim/
+data_new/
+__pycache__/
+*.pyc
+.tmp/
+~$*

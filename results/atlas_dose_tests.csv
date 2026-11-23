@@ -1,0 +1,12 @@
+﻿test,cluster,comparison,statistic,p_value,p_bh,effect_type,effect_size,ci_lo,ci_hi
+chi2_contingency,main_posture,4groups x kclusters,12.0605,0.00717887,,cramers_v,0.0447,,
+kruskal_wallis,c0,4groups,0.0037,0.00372915,0.00372915,epsilon_squared,0.0019,,
+kruskal_wallis,c1,4groups,0.0037,0.00372915,0.00372915,epsilon_squared,0.0019,,
+mann_whitney,c0,control vs 5mg,1200209.0,0.000475274,0.00142582,cohens_d,0.1360,0.0642,0.2078
+mann_whitney,c0,control vs 8mg,1269194.5,0.0247412,0.0371118,cohens_d,0.0831,0.0128,0.1534
+mann_whitney,c0,control vs 10mg,1160519.0,0.294926,0.294926,cohens_d,0.0394,-0.0320,0.1108
+mann_whitney,c1,control vs 5mg,1035206.0,0.000475274,0.00142582,cohens_d,-0.1360,-0.2078,-0.0642
+mann_whitney,c1,control vs 8mg,1156501.5,0.0247412,0.0371118,cohens_d,-0.0831,-0.1534,-0.0128
+mann_whitney,c1,control vs 10mg,1110477.0,0.294926,0.294926,cohens_d,-0.0394,-0.1108,0.0320
+cochran_armitage,c0,dose_trend,0.5700,0.568707,,z,0.5700,,
+cochran_armitage,c1,dose_trend,-0.5700,0.568707,,z,-0.5700,,
