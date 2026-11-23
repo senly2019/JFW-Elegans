@@ -19,7 +19,10 @@ bending-depth axis (BDI) is provided as the replacement readout.
 ```
 code/                     all analysis scripts (self-contained; see code/README_SUBMISSION.md)
 annotations/main/         raw blind annotations of the main three-rater experiment
-                          (labels_A/B/C.csv + retest labels_A2.csv, 310 frames)
+                          (labels_A/B/C.csv, three students, 310 frames each; the
+                          60 hidden duplicates re-presented under different
+                          identifiers inside each record give the within-annotator
+                          test–retest)
 annotations/wormcrops/    raw blind annotations of the cross-dataset experiment
                           (labels_R1/R2.csv, 300 frames + key.csv with rule labels)
 results/                  derived result tables and logs referenced in the manuscript
