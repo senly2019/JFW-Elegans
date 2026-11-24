@@ -1,4 +1,4 @@
-# Frame-level posture categories lack evidential support in *Caenorhabditis elegans*
+# No evidence for discrete frame-level posture categories in Caenorhabditis elegans: a continuous bending-depth readout
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24393307.svg)](https://doi.org/10.5281/zenodo.24393307)
 
